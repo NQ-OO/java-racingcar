@@ -10,12 +10,10 @@ public class Calculator {
     private static final int DEFAULT_RETURN_VALUE = 0;
 
     public static int sumText(String text) {
-        if (isBlank(text)) return DEFAULT_RETURN_VALUE;
+        if (text.isBlank()) {
+            return DEFAULT_RETURN_VALUE;
+        }
         return sum(toInt(split(text)));
-    }
-
-    private static boolean isBlank(String text) {
-        return Objects.isNull(text) || text.isEmpty();
     }
 
     private static String[] split(String text) {
@@ -31,23 +29,6 @@ public class Calculator {
         return intValues;
     }
 
-    private static String findDelimiter(String text) {
-        String delimiter = DEFAULT_DELIMITER;
-        Matcher matcher = findDelimiterMatcher(text);
-        if (matcher.find()) delimiter = matcher.group(1);
-        return delimiter;
-    }
-
-    private static String toSplitText(String text) {
-        Matcher matcher = findDelimiterMatcher(text);
-        if (matcher.find()) text = matcher.group(2);
-        return text;
-    }
-
-    private static Matcher findDelimiterMatcher(String text) {
-        return DELIMITER_PATTERN.matcher(text);
-    }
-
     private static int sum(int[] intValues) {
         int sum = DEFAULT_RETURN_VALUE;
         for (int value : intValues) {
@@ -55,4 +36,26 @@ public class Calculator {
         }
         return sum;
     }
+
+    private static String findDelimiter(String text) {
+        String delimiter = DEFAULT_DELIMITER;
+        Matcher matcher = findDelimiterMatcher(text);
+        if (matcher.find()) {
+            delimiter = matcher.group(1);
+        }
+        return delimiter;
+    }
+
+    private static String toSplitText(String text) {
+        Matcher matcher = findDelimiterMatcher(text);
+        if (matcher.find()) {
+            text = matcher.group(2);
+        }
+        return text;
+    }
+
+    private static Matcher findDelimiterMatcher(String text) {
+        return DELIMITER_PATTERN.matcher(text);
+    }
+
 }
